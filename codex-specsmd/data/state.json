@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "nextConfirmationSequence": 1,
+  "soldSeats": {
+    "showtime-dune-imax-tuesday": ["A2", "B3"],
+    "showtime-dune-3d-wednesday": ["A1"]
+  },
+  "purchases": []
+}

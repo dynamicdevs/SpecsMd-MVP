@@ -1,0 +1,17 @@
+[
+  {
+    "id": "movie-001",
+    "title": "El Secreto de sus Ojos",
+    "formats": ["2D"]
+  },
+  {
+    "id": "movie-002",
+    "title": "Dune: Parte Dos",
+    "formats": ["3D", "IMAX"]
+  },
+  {
+    "id": "movie-003",
+    "title": "Spider-Man: Across the Spider-Verse",
+    "formats": ["2D", "3D", "IMAX"]
+  }
+]

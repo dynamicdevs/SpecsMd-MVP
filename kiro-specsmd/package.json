@@ -1,0 +1,27 @@
+{
+  "name": "kiro-specsmd",
+  "version": "1.0.0",
+  "description": "Cinema ticket purchasing CLI - Kiro specsmd implementation",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "billboard": "node dist/index.js billboard",
+    "showtimes": "node dist/index.js showtimes",
+    "seats": "node dist/index.js seats",
+    "buy": "node dist/index.js buy",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.1.0"
+  },
+  "dependencies": {
+    "commander": "^13.0.0"
+  }
+}

@@ -1,0 +1,5 @@
+[
+  { "id": "m1", "title": "Dune: Part Two", "formats": ["2D", "3D", "IMAX"] },
+  { "id": "m2", "title": "Inside Out 2", "formats": ["2D", "3D"] },
+  { "id": "m3", "title": "The Matrix Resurrections", "formats": ["2D", "IMAX"] }
+]

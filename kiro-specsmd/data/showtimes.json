@@ -1,0 +1,42 @@
+[
+  {
+    "id": "st-001",
+    "movieId": "movie-001",
+    "date": "2026-06-22",
+    "time": "18:00",
+    "format": "2D",
+    "room": "Sala 1"
+  },
+  {
+    "id": "st-002",
+    "movieId": "movie-002",
+    "date": "2026-06-23",
+    "time": "20:30",
+    "format": "3D",
+    "room": "Sala 2"
+  },
+  {
+    "id": "st-003",
+    "movieId": "movie-002",
+    "date": "2026-06-23",
+    "time": "17:00",
+    "format": "IMAX",
+    "room": "Sala IMAX"
+  },
+  {
+    "id": "st-004",
+    "movieId": "movie-003",
+    "date": "2026-06-24",
+    "time": "15:00",
+    "format": "2D",
+    "room": "Sala 1"
+  },
+  {
+    "id": "st-005",
+    "movieId": "movie-003",
+    "date": "2026-06-25",
+    "time": "21:00",
+    "format": "IMAX",
+    "room": "Sala IMAX"
+  }
+]

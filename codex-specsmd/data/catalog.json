@@ -1,0 +1,54 @@
+{
+  "movies": [
+    {
+      "id": "movie-dune-2",
+      "title": "Dune: Part Two",
+      "classification": "PG-13"
+    },
+    {
+      "id": "movie-inside-out-2",
+      "title": "Inside Out 2",
+      "classification": "PG"
+    },
+    {
+      "id": "movie-matrix",
+      "title": "The Matrix",
+      "classification": "R"
+    }
+  ],
+  "auditoriums": [
+    {
+      "id": "auditorium-1",
+      "name": "Hall 1",
+      "seats": ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4"]
+    },
+    {
+      "id": "auditorium-imax",
+      "name": "IMAX Hall",
+      "seats": ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4"]
+    }
+  ],
+  "showtimes": [
+    {
+      "id": "showtime-dune-imax-tuesday",
+      "movieId": "movie-dune-2",
+      "startsAt": "2026-06-23T19:00:00Z",
+      "auditoriumId": "auditorium-imax",
+      "format": "IMAX"
+    },
+    {
+      "id": "showtime-dune-3d-wednesday",
+      "movieId": "movie-dune-2",
+      "startsAt": "2026-06-24T21:30:00Z",
+      "auditoriumId": "auditorium-1",
+      "format": "3D"
+    },
+    {
+      "id": "showtime-inside-out-2d-tuesday",
+      "movieId": "movie-inside-out-2",
+      "startsAt": "2026-06-23T16:00:00Z",
+      "auditoriumId": "auditorium-1",
+      "format": "2D"
+    }
+  ]
+}

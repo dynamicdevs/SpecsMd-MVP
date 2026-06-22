@@ -1,0 +1,70 @@
+[
+  {
+    "id": "st1",
+    "movieId": "m1",
+    "startsAt": "2026-06-23T19:00:00Z",
+    "format": "IMAX",
+    "screen": "IMAX Hall",
+    "seats": [
+      { "code": "A1", "status": "available" },
+      { "code": "A2", "status": "sold" },
+      { "code": "A3", "status": "available" },
+      { "code": "A4", "status": "available" },
+      { "code": "B1", "status": "available" },
+      { "code": "B2", "status": "available" },
+      { "code": "B3", "status": "sold" },
+      { "code": "B4", "status": "available" }
+    ]
+  },
+  {
+    "id": "st2",
+    "movieId": "m1",
+    "startsAt": "2026-06-24T21:30:00Z",
+    "format": "3D",
+    "screen": "Hall 2",
+    "seats": [
+      { "code": "A1", "status": "sold" },
+      { "code": "A2", "status": "available" },
+      { "code": "A3", "status": "available" },
+      { "code": "A4", "status": "available" },
+      { "code": "B1", "status": "available" },
+      { "code": "B2", "status": "available" },
+      { "code": "B3", "status": "available" },
+      { "code": "B4", "status": "available" }
+    ]
+  },
+  {
+    "id": "st3",
+    "movieId": "m2",
+    "startsAt": "2026-06-23T17:00:00Z",
+    "format": "2D",
+    "screen": "Hall 3",
+    "seats": [
+      { "code": "A1", "status": "available" },
+      { "code": "A2", "status": "available" },
+      { "code": "A3", "status": "available" },
+      { "code": "A4", "status": "available" },
+      { "code": "B1", "status": "available" },
+      { "code": "B2", "status": "available" },
+      { "code": "B3", "status": "available" },
+      { "code": "B4", "status": "sold" }
+    ]
+  },
+  {
+    "id": "st4",
+    "movieId": "m3",
+    "startsAt": "2026-06-25T20:00:00Z",
+    "format": "IMAX",
+    "screen": "IMAX Hall",
+    "seats": [
+      { "code": "A1", "status": "available" },
+      { "code": "A2", "status": "available" },
+      { "code": "A3", "status": "sold" },
+      { "code": "A4", "status": "sold" },
+      { "code": "B1", "status": "available" },
+      { "code": "B2", "status": "available" },
+      { "code": "B3", "status": "available" },
+      { "code": "B4", "status": "available" }
+    ]
+  }
+]
