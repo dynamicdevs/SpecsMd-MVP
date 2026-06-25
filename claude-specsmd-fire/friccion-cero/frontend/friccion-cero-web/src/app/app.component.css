@@ -1,0 +1,42 @@
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 56px;
+  background: #1d4ed8;
+  color: #fff;
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.app-header__nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.app-header__nav a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.app-header__nav a.active,
+.app-header__nav a:hover {
+  color: #fff;
+}
+
+.app-content {
+  padding: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}

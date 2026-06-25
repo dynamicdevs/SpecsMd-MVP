@@ -1,0 +1,85 @@
+<h1>Dashboard</h1>
+
+@if (loading) {
+  <div class="flex justify-content-center p-5"><p-progressSpinner /></div>
+} @else if (error) {
+  <p-card>
+    <p class="text-red-500">No se pudo cargar el dashboard. ¿Está corriendo el backend en
+      <code>http://localhost:8000</code>?</p>
+  </p-card>
+} @else if (summary) {
+  <div class="grid-cards">
+    <p-card>
+      <div class="metric-label">Total de fricciones</div>
+      <div class="metric">{{ summary.totalFrictions }}</div>
+    </p-card>
+    <p-card>
+      <div class="metric-label">Horas mensuales perdidas</div>
+      <div class="metric">{{ summary.totalMonthlyHoursLost | number: '1.0-1' }}</div>
+    </p-card>
+    <p-card>
+      <div class="metric-label">Costo mensual estimado</div>
+      <div class="metric">{{ summary.totalEstimatedMonthlyCost | currency: 'USD' }}</div>
+    </p-card>
+  </div>
+
+  <div class="grid-tables mb-3">
+    <p-card header="Fricciones por categoría">
+      <p-table [value]="summary.frictionsByCategory" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr><th>Categoría</th><th class="text-right">Cantidad</th></tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr><td>{{ row.label }}</td><td class="text-right">{{ row.count }}</td></tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    <p-card header="Fricciones por prioridad">
+      <p-table [value]="summary.frictionsByPriority" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr><th>Prioridad</th><th class="text-right">Cantidad</th></tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td><p-tag [value]="row.label" [severity]="severity(row.label)" /></td>
+            <td class="text-right">{{ row.count }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+  <div class="grid-tables">
+    <p-card header="Top 5 fricciones más costosas">
+      <p-table [value]="summary.top5CostlyFrictions" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr><th>Fricción</th><th class="text-right">Costo/mes</th></tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-f>
+          <tr>
+            <td><a [routerLink]="['/frictions', f.id]">{{ f.title }}</a></td>
+            <td class="text-right">{{ f.estimatedMonthlyCost | currency: 'USD' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr><td colspan="2">Sin datos.</td></tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    <p-card header="Iniciativas por estado">
+      <p-table [value]="summary.initiativesByStatus" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr><th>Estado</th><th class="text-right">Cantidad</th></tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr><td>{{ row.status }}</td><td class="text-right">{{ row.count }}</td></tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr><td colspan="2">Aún no hay iniciativas.</td></tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+}

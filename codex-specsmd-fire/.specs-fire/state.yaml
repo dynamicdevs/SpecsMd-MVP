@@ -1,0 +1,249 @@
+project:
+  name: codex-specsmd-fire
+  description: Codex skill package for the specs.md FIRE flow.
+  created: 2026-06-24T15:46:27-04:00
+  fire_version: 0.1.8
+workspace:
+  type: greenfield
+  structure: monolith
+  autonomy_bias: balanced
+  run_scope_preference: single
+  run_scope_history: []
+  scanned_at: 2026-06-24T15:46:27-04:00
+  parts: []
+intents:
+  - id: friccion-cero
+    title: Friccion Cero
+    status: completed
+    completed_at: 2026-06-25T17:15:56.153Z
+    work_items:
+      - id: plan-mvp-checkpoints
+        title: Plan MVP and Checkpoints
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on: []
+        run_id: run-codex-specsmd-fire-001
+        completed_at: 2026-06-24T20:16:21.680Z
+      - id: backend-solution-foundation
+        title: Backend Node API Foundation
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - plan-mvp-checkpoints
+        run_id: run-codex-specsmd-fire-002
+        completed_at: 2026-06-24T21:52:50.368Z
+      - id: domain-model-and-persistence
+        title: Domain Model and Persistence
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - backend-solution-foundation
+        run_id: run-codex-specsmd-fire-003
+        completed_at: 2026-06-24T23:40:09.060Z
+      - id: calculation-classification-services
+        title: Calculation and Classification Services
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - domain-model-and-persistence
+        run_id: run-codex-specsmd-fire-004
+        completed_at: 2026-06-24T23:46:56.860Z
+      - id: friction-api
+        title: Friction API
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - calculation-classification-services
+        run_id: run-codex-specsmd-fire-005
+        completed_at: 2026-06-25T00:14:20.794Z
+      - id: initiative-api
+        title: Initiative API
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - friction-api
+        run_id: run-codex-specsmd-fire-006
+        completed_at: 2026-06-25T01:06:59.026Z
+      - id: dashboard-api
+        title: Dashboard API
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - friction-api
+          - initiative-api
+        run_id: run-codex-specsmd-fire-007
+        completed_at: 2026-06-25T01:18:59.937Z
+      - id: frontend-foundation
+        title: Frontend Foundation
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - backend-solution-foundation
+        run_id: run-codex-specsmd-fire-008
+        completed_at: 2026-06-25T01:55:11.499Z
+      - id: friction-screens
+        title: Friction Screens
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - frontend-foundation
+          - friction-api
+        run_id: run-codex-specsmd-fire-009
+        completed_at: 2026-06-25T02:18:22.339Z
+      - id: initiative-screens
+        title: Initiative Screens
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - frontend-foundation
+          - initiative-api
+          - friction-screens
+        run_id: run-codex-specsmd-fire-010
+        completed_at: 2026-06-25T02:58:36.946Z
+      - id: dashboard-screen
+        title: Dashboard Screen
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - frontend-foundation
+          - dashboard-api
+          - friction-screens
+          - initiative-screens
+        run_id: run-codex-specsmd-fire-011
+        completed_at: 2026-06-25T16:42:59.921Z
+      - id: basic-tests
+        title: Basic Tests
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - dashboard-screen
+        run_id: run-codex-specsmd-fire-012
+        completed_at: 2026-06-25T17:11:23.344Z
+      - id: execution-documentation
+        title: Execution Documentation
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on:
+          - basic-tests
+        run_id: run-codex-specsmd-fire-013
+        completed_at: 2026-06-25T17:15:56.140Z
+runs:
+  active: []
+  completed:
+    - id: run-codex-specsmd-fire-001
+      scope: single
+      work_items:
+        - id: plan-mvp-checkpoints
+          intent: friccion-cero
+          mode: autopilot
+      started: 2026-06-24T20:14:00.340Z
+      completed: 2026-06-24T20:16:21.680Z
+    - id: run-codex-specsmd-fire-002
+      scope: single
+      work_items:
+        - id: backend-solution-foundation
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-24T21:40:17.230Z
+      completed: 2026-06-24T21:52:50.368Z
+    - id: run-codex-specsmd-fire-003
+      scope: single
+      work_items:
+        - id: domain-model-and-persistence
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-24T22:47:09.240Z
+      completed: 2026-06-24T23:40:09.060Z
+    - id: run-codex-specsmd-fire-004
+      scope: single
+      work_items:
+        - id: calculation-classification-services
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-24T23:42:24.515Z
+      completed: 2026-06-24T23:46:56.860Z
+    - id: run-codex-specsmd-fire-005
+      scope: single
+      work_items:
+        - id: friction-api
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-24T23:59:13.404Z
+      completed: 2026-06-25T00:14:20.794Z
+    - id: run-codex-specsmd-fire-006
+      scope: single
+      work_items:
+        - id: initiative-api
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-25T01:00:43.144Z
+      completed: 2026-06-25T01:06:59.026Z
+    - id: run-codex-specsmd-fire-007
+      scope: single
+      work_items:
+        - id: dashboard-api
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-25T01:11:52.062Z
+      completed: 2026-06-25T01:18:59.937Z
+    - id: run-codex-specsmd-fire-008
+      scope: single
+      work_items:
+        - id: frontend-foundation
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-25T01:21:26.524Z
+      completed: 2026-06-25T01:55:11.499Z
+    - id: run-codex-specsmd-fire-009
+      scope: single
+      work_items:
+        - id: friction-screens
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-25T01:57:14.422Z
+      completed: 2026-06-25T02:18:22.339Z
+    - id: run-codex-specsmd-fire-010
+      scope: single
+      work_items:
+        - id: initiative-screens
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-25T02:51:25.681Z
+      completed: 2026-06-25T02:58:36.946Z
+    - id: run-codex-specsmd-fire-011
+      scope: single
+      work_items:
+        - id: dashboard-screen
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-25T13:20:46.174Z
+      completed: 2026-06-25T16:42:59.921Z
+    - id: run-codex-specsmd-fire-012
+      scope: single
+      work_items:
+        - id: basic-tests
+          intent: friccion-cero
+          mode: confirm
+      started: 2026-06-25T17:04:32.575Z
+      completed: 2026-06-25T17:11:23.344Z
+    - id: run-codex-specsmd-fire-013
+      scope: single
+      work_items:
+        - id: execution-documentation
+          intent: friccion-cero
+          mode: autopilot
+      started: 2026-06-25T17:13:40.411Z
+      completed: 2026-06-25T17:15:56.140Z

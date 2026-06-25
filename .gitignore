@@ -26,3 +26,18 @@ Thumbs.db
 # Cache
 .cache/
 .vitest/
+
+# Python (backends FastAPI del experimento V2)
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Angular (frontends del experimento V2)
+.angular/
+
+# Bases de datos locales (SQLite / Prisma)
+*.db
+*.sqlite
+*.sqlite3

@@ -1,0 +1,75 @@
+<h1>{{ isEdit ? 'Editar fricción' : 'Nueva fricción' }}</h1>
+
+<p-card>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="formgrid grid">
+    <div class="field col-12">
+      <label for="title">Título *</label>
+      <input id="title" pInputText formControlName="title" class="w-full" />
+      @if (form.get('title')?.invalid && form.get('title')?.touched) {
+        <small class="p-error">El título es obligatorio.</small>
+      }
+    </div>
+
+    <div class="field col-12">
+      <label for="description">Descripción</label>
+      <textarea id="description" pInputTextarea formControlName="description" rows="3" class="w-full"></textarea>
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <label for="area">Área</label>
+      <input id="area" pInputText formControlName="area" class="w-full" />
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <label for="category">Categoría</label>
+      <div class="flex gap-2">
+        <p-dropdown
+          inputId="category"
+          [options]="categories"
+          optionLabel="label"
+          optionValue="value"
+          formControlName="category"
+          placeholder="(se sugiere automáticamente)"
+          [showClear]="true"
+          styleClass="w-full"
+        />
+        <button pButton type="button" icon="pi pi-bolt" label="Sugerir" class="p-button-outlined" (click)="suggestCategory()"></button>
+      </div>
+    </div>
+
+    <div class="field col-6 md:col-3">
+      <label for="frequency">Frecuencia (veces/mes)</label>
+      <p-inputNumber inputId="frequency" formControlName="frequency" [min]="0" styleClass="w-full" />
+    </div>
+    <div class="field col-6 md:col-3">
+      <label for="timeLost">Minutos perdidos</label>
+      <p-inputNumber inputId="timeLost" formControlName="timeLostMinutes" [min]="0" styleClass="w-full" />
+    </div>
+    <div class="field col-6 md:col-3">
+      <label for="people">Personas afectadas</label>
+      <p-inputNumber inputId="people" formControlName="peopleAffected" [min]="0" styleClass="w-full" />
+    </div>
+    <div class="field col-6 md:col-3">
+      <label for="pain">Nivel de dolor (1-5)</label>
+      <p-inputNumber inputId="pain" formControlName="painLevel" [min]="1" [max]="5" styleClass="w-full" />
+    </div>
+
+    <div class="field col-12 md:col-6">
+      <label for="automation">Potencial de automatización</label>
+      <p-dropdown inputId="automation" [options]="automation" optionLabel="label" optionValue="value" formControlName="automationPotential" styleClass="w-full" />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label for="status">Estado</label>
+      <p-dropdown inputId="status" [options]="statuses" optionLabel="label" optionValue="value" formControlName="status" styleClass="w-full" />
+    </div>
+
+    <div class="col-12 flex gap-2 justify-content-end mt-2">
+      <a pButton routerLink="/frictions" label="Cancelar" class="p-button-text"></a>
+      <button pButton type="submit" [loading]="saving" icon="pi pi-check" label="Guardar"></button>
+    </div>
+
+    <small class="col-12 text-500">
+      El impacto (horas y costo) y la prioridad se calculan automáticamente en el servidor al guardar.
+    </small>
+  </form>
+</p-card>

@@ -1,0 +1,176 @@
+project:
+  name: friccion-cero
+  description: Plataforma fullstack para detectar, registrar, medir y priorizar
+    fricciones operativas en equipos y empresas
+  created: 2026-06-23T12:00:00Z
+  fire_version: 0.1.8
+workspace:
+  type: greenfield
+  structure: monolith
+  autonomy_bias: balanced
+  run_scope_preference: batch
+  run_scope_history: []
+intents:
+  - id: friccion-cero-mvp
+    title: Fricción Cero MVP
+    status: in_progress
+    work_items:
+      - id: backend-scaffold
+        title: Backend Project Scaffold
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: []
+        run_id: run-kiro-specsmd-fire-001
+        completed_at: 2026-06-23T20:06:29.700Z
+      - id: domain-entities
+        title: Domain Entities & DbContext
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - backend-scaffold
+        run_id: run-kiro-specsmd-fire-002
+        completed_at: 2026-06-23T20:11:09.071Z
+      - id: calculation-services
+        title: Calculation & Classification Services
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - domain-entities
+        run_id: run-kiro-specsmd-fire-002
+        completed_at: 2026-06-23T20:11:09.071Z
+      - id: friction-api
+        title: Friction CRUD API
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - calculation-services
+        run_id: run-kiro-specsmd-fire-002
+        completed_at: 2026-06-23T20:11:09.071Z
+      - id: initiative-api
+        title: Initiative CRUD API
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on:
+          - friction-api
+        run_id: run-kiro-specsmd-fire-002
+        completed_at: 2026-06-23T20:11:09.071Z
+      - id: dashboard-api
+        title: Dashboard Metrics API
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on:
+          - friction-api
+          - initiative-api
+        run_id: run-kiro-specsmd-fire-002
+        completed_at: 2026-06-23T20:11:09.071Z
+      - id: frontend-scaffold
+        title: Frontend Angular Scaffold
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: []
+        run_id: run-kiro-specsmd-fire-001
+        completed_at: 2026-06-23T20:06:29.700Z
+      - id: friction-screens
+        title: Friction Screens (List, Form, Detail)
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - frontend-scaffold
+          - friction-api
+        run_id: run-kiro-specsmd-fire-003
+        completed_at: 2026-06-23T20:15:51.792Z
+      - id: initiative-screens
+        title: Initiative Screens (List, Detail)
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on:
+          - frontend-scaffold
+          - initiative-api
+        run_id: run-kiro-specsmd-fire-003
+        completed_at: 2026-06-23T20:15:51.792Z
+      - id: dashboard-screen
+        title: Dashboard Screen
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on:
+          - frontend-scaffold
+          - dashboard-api
+        run_id: run-kiro-specsmd-fire-003
+        completed_at: 2026-06-23T20:15:51.792Z
+      - id: backend-tests
+        title: Backend Unit Tests
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on:
+          - friction-api
+          - initiative-api
+          - dashboard-api
+        run_id: run-kiro-specsmd-fire-004
+        completed_at: 2026-06-23T20:18:45.553Z
+runs:
+  active: []
+  completed:
+    - id: run-kiro-specsmd-fire-001
+      scope: batch
+      work_items:
+        - id: backend-scaffold
+          intent: friccion-cero-mvp
+          mode: confirm
+        - id: frontend-scaffold
+          intent: friccion-cero-mvp
+          mode: confirm
+      started: 2026-06-23T19:51:01.647Z
+      completed: 2026-06-23T20:06:29.700Z
+    - id: run-kiro-specsmd-fire-002
+      scope: batch
+      work_items:
+        - id: domain-entities
+          intent: friccion-cero-mvp
+          mode: confirm
+        - id: calculation-services
+          intent: friccion-cero-mvp
+          mode: confirm
+        - id: friction-api
+          intent: friccion-cero-mvp
+          mode: confirm
+        - id: initiative-api
+          intent: friccion-cero-mvp
+          mode: autopilot
+        - id: dashboard-api
+          intent: friccion-cero-mvp
+          mode: autopilot
+      started: 2026-06-23T20:06:50.434Z
+      completed: 2026-06-23T20:11:09.071Z
+    - id: run-kiro-specsmd-fire-003
+      scope: batch
+      work_items:
+        - id: friction-screens
+          intent: friccion-cero-mvp
+          mode: confirm
+        - id: initiative-screens
+          intent: friccion-cero-mvp
+          mode: autopilot
+        - id: dashboard-screen
+          intent: friccion-cero-mvp
+          mode: confirm
+      started: 2026-06-23T20:11:23.809Z
+      completed: 2026-06-23T20:15:51.792Z
+    - id: run-kiro-specsmd-fire-004
+      scope: single
+      work_items:
+        - id: backend-tests
+          intent: friccion-cero-mvp
+          mode: autopilot
+      started: 2026-06-23T20:16:05.688Z
+      completed: 2026-06-23T20:18:45.553Z

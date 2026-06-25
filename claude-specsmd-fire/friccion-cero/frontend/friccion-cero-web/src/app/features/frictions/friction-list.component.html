@@ -1,0 +1,47 @@
+<div class="flex justify-content-between align-items-center mb-3">
+  <h1 class="m-0">Fricciones</h1>
+  <a pButton routerLink="/frictions/new" icon="pi pi-plus" label="Nueva fricción"></a>
+</div>
+
+<p-card>
+  <p-table
+    [value]="frictions"
+    [loading]="loading"
+    [paginator]="frictions.length > 10"
+    [rows]="10"
+    styleClass="p-datatable-sm"
+    [globalFilterFields]="['title', 'area', 'category']"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Título</th>
+        <th>Área</th>
+        <th>Categoría</th>
+        <th>Prioridad</th>
+        <th class="text-right">Horas/mes</th>
+        <th class="text-right">Costo/mes</th>
+        <th>Estado</th>
+        <th style="width: 9rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-f>
+      <tr>
+        <td><a [routerLink]="['/frictions', f.id]">{{ f.title }}</a></td>
+        <td>{{ f.area }}</td>
+        <td>{{ f.category }}</td>
+        <td><p-tag [value]="f.priority" [severity]="severity(f.priority)" /></td>
+        <td class="text-right">{{ f.monthlyHoursLost | number: '1.0-1' }}</td>
+        <td class="text-right">{{ f.estimatedMonthlyCost | currency: 'USD' }}</td>
+        <td>{{ f.status }}</td>
+        <td>
+          <button pButton icon="pi pi-eye" class="p-button-text p-button-sm" (click)="view(f)"></button>
+          <button pButton icon="pi pi-pencil" class="p-button-text p-button-sm" (click)="edit(f)"></button>
+          <button pButton icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger" (click)="remove(f)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="8">No hay fricciones registradas todavía.</td></tr>
+    </ng-template>
+  </p-table>
+</p-card>

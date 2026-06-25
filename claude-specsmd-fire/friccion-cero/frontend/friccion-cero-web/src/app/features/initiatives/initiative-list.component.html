@@ -1,0 +1,39 @@
+<h1>Iniciativas</h1>
+
+<p-card>
+  <p-table
+    [value]="initiatives"
+    [loading]="loading"
+    [paginator]="initiatives.length > 10"
+    [rows]="10"
+    styleClass="p-datatable-sm"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Título</th>
+        <th>Fricción</th>
+        <th>Complejidad</th>
+        <th>Prioridad</th>
+        <th class="text-right">Reducción</th>
+        <th>Estado</th>
+        <th style="width: 6rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-i>
+      <tr>
+        <td><a [routerLink]="['/initiatives', i.id]">{{ i.title }}</a></td>
+        <td><a [routerLink]="['/frictions', i.frictionId]">{{ frictionTitle(i.frictionId) }}</a></td>
+        <td>{{ i.complexity }}</td>
+        <td><p-tag [value]="i.priority" [severity]="severity(i.priority)" /></td>
+        <td class="text-right">{{ i.expectedReductionPercent }}%</td>
+        <td>{{ i.status }}</td>
+        <td>
+          <button pButton icon="pi pi-trash" class="p-button-text p-button-sm p-button-danger" (click)="remove(i)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="7">Aún no hay iniciativas. Crea una desde el detalle de una fricción.</td></tr>
+    </ng-template>
+  </p-table>
+</p-card>

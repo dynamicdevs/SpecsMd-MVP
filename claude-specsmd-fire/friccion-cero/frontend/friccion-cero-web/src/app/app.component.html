@@ -1,0 +1,18 @@
+<p-toast />
+<p-confirmDialog />
+
+<header class="app-header">
+  <div class="app-header__brand">
+    <i class="pi pi-bolt"></i>
+    <span>Fricción Cero</span>
+  </div>
+  <nav class="app-header__nav">
+    <a routerLink="/dashboard" routerLinkActive="active"><i class="pi pi-chart-bar"></i> Dashboard</a>
+    <a routerLink="/frictions" routerLinkActive="active"><i class="pi pi-exclamation-triangle"></i> Fricciones</a>
+    <a routerLink="/initiatives" routerLinkActive="active"><i class="pi pi-lightbulb"></i> Iniciativas</a>
+  </nav>
+</header>
+
+<main class="app-content">
+  <router-outlet />
+</main>

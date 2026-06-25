@@ -1,0 +1,45 @@
+<p-toast />
+<p-confirmDialog />
+
+<div class="app-shell">
+  <aside class="app-sidebar" aria-label="Navegacion principal">
+    <a class="brand" routerLink="/dashboard" aria-label="Friccion Cero">
+      <span class="brand-mark">FC</span>
+      <span class="brand-copy">
+        <strong>Friccion Cero</strong>
+        <small>Operaciones</small>
+      </span>
+    </a>
+
+    <nav class="nav-list">
+      @for (item of navItems; track item.path) {
+        <a
+          class="nav-link"
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/dashboard' }"
+        >
+          <i [class]="item.icon" aria-hidden="true"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+  </aside>
+
+  <main class="app-main">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">MVP</span>
+        <h1>Friccion Cero</h1>
+      </div>
+      <a pButton routerLink="/frictions/new" severity="contrast">
+        <i class="pi pi-plus" aria-hidden="true"></i>
+        <span>Nueva friccion</span>
+      </a>
+    </header>
+
+    <section class="route-surface">
+      <router-outlet />
+    </section>
+  </main>
+</div>

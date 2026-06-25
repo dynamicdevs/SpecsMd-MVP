@@ -1,0 +1,120 @@
+project:
+  name: "friccion-cero"
+  description: "App fullstack para registrar fricciones operativas, medir su impacto en tiempo/dinero, clasificarlas, priorizarlas y convertirlas en iniciativas de mejora."
+  created: "2026-06-25T00:00:00Z"
+  fire_version: "0.1.8"
+
+workspace:
+  type: greenfield
+  structure: monorepo
+  autonomy_bias: autonomous
+  run_scope_preference: wide
+  run_scope_history: []
+  parts:
+    - id: backend
+      path: "friccion-cero/backend"
+      language: python
+      framework: fastapi
+    - id: frontend
+      path: "friccion-cero/frontend/friccion-cero-web"
+      language: typescript
+      framework: angular
+
+intents:
+  - id: friccion-cero
+    title: "Fricción Cero MVP"
+    status: completed
+    work_items:
+      - id: backend-scaffold
+        title: "Scaffold FastAPI + SQLModel + SQLite"
+        status: completed
+        complexity: medium
+        mode: confirm
+      - id: backend-domain-model
+        title: "Modelos de dominio (Friction, Initiative) y enums"
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: [backend-scaffold]
+      - id: backend-impact-classification-priority
+        title: "Servicios: cálculo de impacto, clasificación por reglas, priorización"
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: [backend-domain-model]
+      - id: backend-frictions-crud
+        title: "CRUD de fricciones (endpoints + repositorio + servicio)"
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: [backend-impact-classification-priority]
+      - id: backend-initiatives-crud
+        title: "CRUD de iniciativas + crear desde fricción"
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: [backend-frictions-crud]
+      - id: backend-dashboard
+        title: "Endpoints de dashboard (métricas agregadas)"
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on: [backend-initiatives-crud]
+      - id: backend-seed-swagger
+        title: "Seed inicial + Swagger + CORS + config valor hora"
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on: [backend-dashboard]
+      - id: frontend-scaffold
+        title: "Scaffold Angular + PrimeNG, routing, core HTTP"
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: [backend-seed-swagger]
+      - id: frontend-frictions
+        title: "Pantallas de fricciones (list/new/detail/edit)"
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: [frontend-scaffold]
+      - id: frontend-initiatives
+        title: "Pantallas de iniciativas (list/detail/edit/crear desde fricción)"
+        status: completed
+        complexity: medium
+        mode: confirm
+        depends_on: [frontend-frictions]
+      - id: frontend-dashboard
+        title: "Pantalla dashboard con cards y tablas PrimeNG"
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on: [frontend-initiatives]
+      - id: docs-readme
+        title: "README + /specs docs + instrucciones de ejecución"
+        status: completed
+        complexity: low
+        mode: autopilot
+        depends_on: [frontend-dashboard]
+
+runs:
+  active: []
+  completed:
+    - id: run-friccion-cero-001
+      scope: wide
+      intent: friccion-cero
+      work_items:
+        - backend-scaffold
+        - backend-domain-model
+        - backend-impact-classification-priority
+        - backend-frictions-crud
+        - backend-initiatives-crud
+        - backend-dashboard
+        - backend-seed-swagger
+        - frontend-scaffold
+        - frontend-frictions
+        - frontend-initiatives
+        - frontend-dashboard
+        - docs-readme
+      started: "2026-06-25T00:00:00Z"
+      completed: "2026-06-25T00:00:00Z"

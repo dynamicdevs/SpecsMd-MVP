@@ -2,7 +2,19 @@
 
 ## De qué trata este experimento
 
-Este repositorio contiene **la misma aplicación** — un CLI de compra de boletos de cine — construida 3 veces de forma independiente usando la metodología **specsmd AI-DLC** (AI-Driven Development Life Cycle) en 3 IDEs agénticos diferentes:
+Este repositorio compara cómo **3 IDEs agénticos** (Claude Code, Codex, Kiro) ejecutan la metodología
+**specsmd**, en **dos experimentos**:
+
+- **🧪 Experimento V1 — AI-DLC**: la misma app (un **CLI de compra de boletos de cine**) construida 3
+  veces con el flujo **AI-DLC** (Init → Inception → Construction → Operations, con checkpoints humanos).
+- **🔥 Experimento V2 — FIRE**: una app **fullstack** más ambiciosa (**Fricción Cero**) construida 3
+  veces con el flujo **FIRE** (Intent → Work Item → Run, alta autonomía). Ver apartado al final.
+
+El resto de este documento detalla primero el **V1**; el **V2** está al final.
+
+### Experimento V1 — los 3 entornos
+
+La misma aplicación — un CLI de compra de boletos de cine — construida 3 veces de forma independiente usando la metodología **specsmd AI-DLC** (AI-Driven Development Life Cycle) en 3 IDEs agénticos diferentes:
 
 | Carpeta | Agente | IDE / Entorno |
 |---------|--------|---------------|
@@ -169,14 +181,20 @@ cd kiro-specsmd && npm install && npm run build && npm run billboard
 
 ```
 .
-├── .specsmd/              # Metodología AI-DLC (compartida)
-├── .claude/               # Config para Claude Code
-├── .codex/                # Config para Codex
-├── .kiro/                 # Config para Kiro
-├── claude-specsmd/        # Implementación Claude Code
-├── codex-specsmd/         # Implementación Codex
-├── kiro-specsmd/          # Implementación Kiro
-└── README.md              # Este archivo
+├── .specsmd/                  # Metodología AI-DLC (compartida)
+├── .claude/                   # Config para Claude Code
+├── .codex/                    # Config para Codex
+├── .kiro/                     # Config para Kiro
+│
+├── claude-specsmd/            # V1 · AI-DLC · CLI de cine · Claude Code
+├── codex-specsmd/             # V1 · AI-DLC · CLI de cine · Codex
+├── kiro-specsmd/              # V1 · AI-DLC · CLI de cine · Kiro
+│
+├── claude-specsmd-fire/       # V2 · FIRE · Fricción Cero · Claude Code
+├── codex-specsmd-fire/        # V2 · FIRE · Fricción Cero · Codex
+├── kiro-specsmd-fire/         # V2 · FIRE · Fricción Cero · Kiro
+│
+└── README.md                  # Este archivo
 ```
 
 ---
@@ -195,6 +213,79 @@ Esto no fue impuesto — cada agente llegó a las mismas herramientas por mérit
 
 ---
 
+## 🔥 Experimento V2 — SpecsMD **FIRE** (app *Fricción Cero*)
+
+> Segunda vuelta del experimento, esta vez con el flujo **FIRE** (Fast Intent-Run Engineering)
+> en lugar de AI-DLC. FIRE aplana la jerarquía a **Intent → Work Item → Run** y usa checkpoints
+> adaptativos (0–2) en vez de los checkpoints humanos por fase de AI-DLC. El objetivo: ver cómo
+> se comporta cada agente cuando **se le da más autonomía y menos ceremonia**.
+
+### El caso de uso (V2)
+
+Una app **fullstack** llamada **Fricción Cero**: registrar fricciones operativas (trabajo manual,
+esperas, reuniones sin decisión, falta de integración…), **calcular su impacto en tiempo y dinero**,
+clasificarlas por reglas, priorizarlas automáticamente y convertirlas en **iniciativas de mejora**,
+con un **dashboard**. Mucho más ambicioso que el CLI de cine del V1 (backend + frontend + DB + cálculos).
+
+| Carpeta | Agente | IDE / Entorno |
+|---------|--------|---------------|
+| `claude-specsmd-fire/` | Claude Code | Terminal CLI |
+| `codex-specsmd-fire/` | Codex (OpenAI) | Visual Studio Code |
+| `kiro-specsmd-fire/` | Kiro (Amazon) | Kiro IDE |
+
+### Resumen ejecutivo (V2)
+
+| Aspecto | Claude Code | Codex | Kiro |
+|---------|-------------|-------|------|
+| **Resultado** | ✅ Funcional | ✅ Funcional | ✅ Funcional |
+| **Backend** | FastAPI + SQLModel (Python) | Express + Prisma (Node/TS) | FastAPI + SQLAlchemy (Python) |
+| **Frontend** | Angular 18 + PrimeNG 17 | Angular 21 + PrimeNG 21 | Angular 18 + PrimeNG 17 |
+| **Work items** | 12 | 13 | 11 |
+| **Runs FIRE** | **1** (todo de un tirón) | **13** (uno por work item) | **4** (agrupados) |
+| **Sesiones consumidas** | 1 (de corrido) | **+2,5 sesiones** vs. su contraparte AI-DLC | 1 (rápido) |
+| **Estilo de ejecución** | Autónomo, batch | Secuencial, ceremonioso | Planifica → ejecuta veloz |
+
+> El número de **runs** es el dato más revelador: en FIRE, un "run" agrupa work items. Claude los
+> ejecutó **todos en un solo run**, Kiro en **4**, y Codex hizo **un run por work item (13)**.
+
+### 👀 Comparativa desde la perspectiva del experimentador
+
+**1. Kiro — Se tomó su tiempo planificando, pero ejecutó rápido**
+> Kiro se dio el tiempo de **preparar bien los intents**, pero a la hora de construir **ejecutó
+> rápido y sin problemas**. Buen equilibrio entre planificación previa y velocidad de ejecución.
+
+**2. Codex — Fiel a la metodología, pero el más costoso**
+> Codex fue **uno a uno respetando la metodología** para construir (13 runs, un work item a la vez).
+> Esa disciplina tuvo un costo: consumió **2,5 sesiones más** que su contraparte en AI-DLC. El más
+> ceremonioso y exhaustivo, también el más caro en tiempo/sesiones.
+
+**3. Claude Code — Todo de un tirón, pero respetando el proceso**
+> Claude **ejecutó todo de corrido** (un solo run con los 12 work items), pero **respetó la
+> metodología FIRE sin preguntarle al usuario** en cada paso: inicializó el workspace, capturó el
+> intent, descompuso en work items y construyó, aprovechando la autonomía que FIRE habilita.
+
+### Lectura del experimento V2
+
+| Eje | Quién lideró | Comentario |
+|-----|--------------|------------|
+| **Autonomía / velocidad** | 🟢 Claude | 1 run, sin pausas, respetando el flujo |
+| **Planificación previa** | 🟢 Kiro | Intents bien preparados, luego ejecución veloz |
+| **Apego literal a la metodología** | 🟢 Codex | Un run por work item, máxima trazabilidad |
+| **Eficiencia de sesiones** | 🟢 Claude / Kiro | Codex consumió +2,5 sesiones vs. su AI-DLC |
+
+**Conclusión V2**: FIRE premia la autonomía. Cuanto más literal y granular fue el agente (Codex,
+un run por ítem), **más caro** resultó — justo lo contrario de lo que el flujo FIRE busca. Claude
+y Kiro interpretaron mejor el espíritu de FIRE (menos ceremonia, más autonomía) y llegaron al mismo
+resultado funcional consumiendo mucho menos. Una observación clave frente al V1: en FIRE las
+diferencias **ya no son solo de estilo, sino de costo operativo**.
+
+> ⚠️ Nota de stack: a diferencia del V1 (donde los tres convergieron al mismo stack por mérito
+> propio), en V2 hubo divergencia: **Codex eligió Node/TS + Prisma** para el backend, mientras que
+> **Claude y Kiro optaron por Python/FastAPI**. Los tres coincidieron en **Angular + PrimeNG** en el
+> frontend.
+
+---
+
 ## Construido por
 
 **Mauricio De Juan** — mdejuan@dynamicdevs.io
@@ -205,9 +296,13 @@ Experimento diseñado para validar la metodología **SpecsMD AI-DLC** como frame
 
 ## Próximos pasos
 
-Este experimento usó el flujo **AI-DLC** (el más completo de SpecsMD, con checkpoints humanos en cada fase). A futuro se probará el mismo caso con los otros flujos disponibles en la metodología:
+El **V1** usó el flujo **AI-DLC** (el más completo de SpecsMD, con checkpoints humanos en cada fase)
+sobre un CLI de cine. El **V2** (ver apartado 🔥 más arriba) ya probó el flujo **FIRE** sobre una app
+fullstack más ambiciosa (*Fricción Cero*). Queda pendiente un flujo de la metodología:
 
 - **Simple** — Solo generación de spec, sin ejecución guiada. Ideal para proyectos donde el desarrollador quiere la planificación pero implementa manualmente.
-- **Fire** — Ejecución rápida con 0-2 checkpoints. Menos fricción, más autonomía del agente, menos control humano.
+- ~~**Fire** — Ejecución rápida con 0-2 checkpoints.~~ ✅ Cubierto en el **Experimento V2**.
 
-La comparativa permitirá entender qué nivel de ceremonia y supervisión humana es óptimo según el tipo de proyecto y la complejidad del dominio.
+Con V1 (AI-DLC) y V2 (FIRE) ya se puede contrastar **ceremonia alta vs. autonomía alta**: el V2 mostró
+que en FIRE el apego literal y granular a la metodología (Codex) se vuelve más costoso, mientras que la
+ejecución autónoma (Claude, Kiro) llega al mismo resultado con menos sesiones.

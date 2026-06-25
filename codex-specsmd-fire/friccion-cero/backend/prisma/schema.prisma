@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Friction {
+  id                   String            @id @default(cuid())
+  title                String
+  description          String
+  area                 String
+  category             String
+  frequency            String
+  timeLostMinutes      Int
+  peopleAffected       Int
+  painLevel            String
+  automationPotential  String
+  monthlyHoursLost     Float             @default(0)
+  estimatedMonthlyCost Float             @default(0)
+  priority             String
+  status               String
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  initiatives          Initiative[]
+  comments             FrictionComment[]
+
+  @@index([priority])
+  @@index([category])
+  @@index([status])
+}
+
+model Initiative {
+  id                       String   @id @default(cuid())
+  frictionId               String
+  title                    String
+  proposedSolution         String
+  expectedReductionPercent Int
+  complexity               String
+  priority                 String
+  status                   String
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  friction                 Friction @relation(fields: [frictionId], references: [id], onDelete: Cascade)
+
+  @@index([frictionId])
+  @@index([priority])
+  @@index([status])
+}
+
+model FrictionComment {
+  id         String   @id @default(cuid())
+  frictionId String
+  comment    String
+  createdAt  DateTime @default(now())
+  friction   Friction @relation(fields: [frictionId], references: [id], onDelete: Cascade)
+
+  @@index([frictionId])
+}
