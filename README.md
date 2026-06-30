@@ -3,14 +3,18 @@
 ## De qué trata este experimento
 
 Este repositorio compara cómo **3 IDEs agénticos** (Claude Code, Codex, Kiro) ejecutan la metodología
-**specsmd**, en **dos experimentos**:
+**specsmd**, en **tres experimentos** (con un cuarto en curso):
 
 - **🧪 Experimento V1 — AI-DLC**: la misma app (un **CLI de compra de boletos de cine**) construida 3
   veces con el flujo **AI-DLC** (Init → Inception → Construction → Operations, con checkpoints humanos).
 - **🔥 Experimento V2 — FIRE**: una app **fullstack** más ambiciosa (**Fricción Cero**) construida 3
-  veces con el flujo **FIRE** (Intent → Work Item → Run, alta autonomía). Ver apartado al final.
+  veces con el flujo **FIRE** (Intent → Work Item → Run, alta autonomía).
+- **📝 Experimento V3 — Simple**: una app **CLI de IA local** (**LocalNote AI**, Python + Ollama)
+  construida 3 veces con el flujo **Simple** (Requisitos → Diseño → Tareas → Implementación).
+- **🧠 Experimento V4 — Ideation** *(en curso)*: cuarta ronda que se probará estos días, centrada en
+  la fase de **Ideation** de la metodología. Ver "Próximos pasos".
 
-El resto de este documento detalla primero el **V1**; el **V2** está al final.
+El resto de este documento detalla primero el **V1**; el **V2** y el **V3** están al final.
 
 ### Experimento V1 — los 3 entornos
 
@@ -194,6 +198,10 @@ cd kiro-specsmd && npm install && npm run build && npm run billboard
 ├── codex-specsmd-fire/        # V2 · FIRE · Fricción Cero · Codex
 ├── kiro-specsmd-fire/         # V2 · FIRE · Fricción Cero · Kiro
 │
+├── claude-specsmd-simple/     # V3 · Simple · LocalNote AI · Claude Code
+├── codex-specsmd-simple/      # V3 · Simple · LocalNote AI · Codex
+├── kiro-specsmd-simple/       # V3 · Simple · LocalNote AI · Kiro
+│
 └── README.md                  # Este archivo
 ```
 
@@ -286,6 +294,83 @@ diferencias **ya no son solo de estilo, sino de costo operativo**.
 
 ---
 
+## 📝 Experimento V3 — SpecsMD **Simple** (app *LocalNote AI*)
+
+> Tercera vuelta del experimento, esta vez con el flujo **Simple**: el más ligero de SpecsMD.
+> En lugar de la ceremonia de AI-DLC o la autonomía de FIRE, Simple se concentra en lo esencial:
+> **generar la especificación por fases (Requisitos → Diseño → Tareas) y luego implementar**.
+> El objetivo: ver cómo cada agente produce y respeta una spec documentada en un proyecto pequeño
+> y acotado.
+
+### El caso de uso (V3)
+
+Una app **CLI en Python** llamada **LocalNote AI**: toma una nota o texto largo y lo procesa con
+**IA 100% local** vía [Ollama](https://ollama.com) (modelo por defecto `minimax-m3:cloud`,
+configurable por `.env`). Cinco acciones: `summarize`, `tasks`, `clean`, `professional`, `ask`.
+Restricciones intencionales: sin APIs externas, sin cloud, sin base de datos, sin frameworks web —
+solo `ollama`, `python-dotenv` y `pytest`. Mucho más pequeño que el V1/V2, pensado como
+laboratorio para ejercitar el flujo Simple de punta a punta.
+
+| Carpeta | Agente | IDE / Entorno |
+|---------|--------|---------------|
+| `claude-specsmd-simple/` | Claude Code | Terminal CLI |
+| `codex-specsmd-simple/` | Codex (OpenAI) | Visual Studio Code |
+| `kiro-specsmd-simple/` | Kiro (Amazon) | Kiro IDE |
+
+> Los tres comparten la misma estructura impuesta por la spec
+> (`app.py` + `src/{config,file_loader,prompts,ai_client}.py` + `tests/` + `specs/localnote-ai/`),
+> así que aquí las diferencias **no están en la arquitectura** (es idéntica), sino en **cómo se
+> llegó a ella**, el manejo de errores y la cobertura de tests.
+
+### Resumen ejecutivo (V3)
+
+| Aspecto | Claude Code | Codex | Kiro |
+|---------|-------------|-------|------|
+| **Resultado** | ✅ Funcional | ✅ Funcional | ✅ Funcional |
+| **Stack** | Python 3 + Ollama | Python 3 + Ollama | Python 3 + Ollama |
+| **Tests (pasan)** | 14 ✅ | 8 ✅ | 14 ✅ |
+| **Docs Simple** | requirements + design + tasks | requirements + design + tasks | requirements + design + tasks |
+| **Sesiones** | 1 (con varias vueltas) | 1 (iteración corta) | 1 (de un tirón) |
+| **Estilo de ejecución** | Iterativo, se reubicó la carpeta | Rápido y directo | Todo de una vez |
+
+### 👀 Comparativa desde la perspectiva del experimentador
+
+**1. Claude Code — Todo en una sesión, pero con vueltas para ubicar la carpeta**
+> Claude **iteró todo en una sola sesión**, pero **se dio varias vueltas para ubicar la carpeta**
+> correcta del proyecto (primero la creó en la raíz y luego hubo que moverla al lugar pedido).
+> Llegó al resultado completo, con la mayor cobertura de tests y el manejo de errores más
+> desacoplado (excepción propia capturada en `app.py`, sin `sys.exit` ni `print` en la capa de IA).
+
+**2. Kiro — Lo mismo, pero ejecutado de una sola vez**
+> Kiro hizo **lo mismo** (una sesión, resultado completo) pero **se ejecutó todo de una sola vez**,
+> sin reubicaciones ni vueltas. Misma cobertura de tests que Claude (14). Manejó los errores de
+> Ollama dentro del propio cliente (`sys.exit` + mensajes), un enfoque más directo aunque más
+> acoplado a la I/O.
+
+**3. Codex — Una sola sesión, iteración corta y todo rápido**
+> Codex **solo ocupó una sesión, la iteración fue corta y todo salió rápido**. Su implementación
+> fue la más minimalista (8 tests, error como `RuntimeError` que propaga limpio). El más económico
+> y veloz de los tres en esta ronda.
+
+### Lectura del experimento V3
+
+| Eje | Quién destacó | Comentario |
+|-----|---------------|------------|
+| **Velocidad / economía** | 🟢 Codex | Iteración corta, una sesión, todo rápido |
+| **Ejecución sin fricción** | 🟢 Kiro | Todo de una vez, sin reubicar carpetas |
+| **Cobertura de tests** | 🟢 Claude / Kiro | 14 tests cada uno vs. 8 de Codex |
+| **Desacople de errores** | 🟢 Claude | Excepción propia capturada en `app.py`, capa de IA pura |
+
+**Conclusión V3**: en un proyecto pequeño y con la estructura ya fijada por la spec, los tres
+convergen a **la misma arquitectura** y a un resultado funcional en **una sola sesión** — el flujo
+Simple iguala mucho el terreno. Las diferencias se vuelven sutiles: Codex prioriza ir rápido y
+ligero, Kiro ejecuta sin fricción de un tirón, y Claude invierte en más tests y mejor separación de
+responsabilidades a cambio de alguna vuelta extra (en este caso, ubicar la carpeta). A menor
+ceremonia y menor tamaño, **menor distancia entre los agentes**: lo contrario al V2, donde FIRE
+amplificó las diferencias de costo.
+
+---
+
 ## Construido por
 
 **Mauricio De Juan** — mdejuan@dynamicdevs.io
@@ -297,12 +382,21 @@ Experimento diseñado para validar la metodología **SpecsMD AI-DLC** como frame
 ## Próximos pasos
 
 El **V1** usó el flujo **AI-DLC** (el más completo de SpecsMD, con checkpoints humanos en cada fase)
-sobre un CLI de cine. El **V2** (ver apartado 🔥 más arriba) ya probó el flujo **FIRE** sobre una app
-fullstack más ambiciosa (*Fricción Cero*). Queda pendiente un flujo de la metodología:
+sobre un CLI de cine. El **V2** (apartado 🔥) probó **FIRE** sobre una app fullstack ambiciosa
+(*Fricción Cero*). El **V3** (apartado 📝) probó el flujo **Simple** sobre un CLI de IA local
+(*LocalNote AI*). Con eso, los tres flujos principales de SpecsMD quedan cubiertos:
 
-- **Simple** — Solo generación de spec, sin ejecución guiada. Ideal para proyectos donde el desarrollador quiere la planificación pero implementa manualmente.
+- ~~**Simple** — Solo generación de spec por fases (Requisitos → Diseño → Tareas) + implementación.~~ ✅ Cubierto en el **Experimento V3**.
 - ~~**Fire** — Ejecución rápida con 0-2 checkpoints.~~ ✅ Cubierto en el **Experimento V2**.
+- ~~**AI-DLC** — Flujo completo con checkpoints humanos por fase.~~ ✅ Cubierto en el **Experimento V1**.
 
-Con V1 (AI-DLC) y V2 (FIRE) ya se puede contrastar **ceremonia alta vs. autonomía alta**: el V2 mostró
-que en FIRE el apego literal y granular a la metodología (Codex) se vuelve más costoso, mientras que la
-ejecución autónoma (Claude, Kiro) llega al mismo resultado con menos sesiones.
+### 🧠 Cuarta ronda — Experimento V4 (Ideation) · *en curso*
+
+Como **cuarta ronda** quedará agregado un **cuarto proyecto** centrado en la fase de **Ideation** de
+la metodología, que **se probará durante estos días**. Cerrará el ciclo evaluando no solo la
+construcción guiada, sino la **generación temprana de ideas y alcance** antes de especificar.
+
+Con V1 (AI-DLC), V2 (FIRE) y V3 (Simple) ya se puede contrastar **ceremonia alta vs. autonomía alta
+vs. mínima**: el V2 mostró que en FIRE el apego literal y granular (Codex) se vuelve más costoso; el
+V3 mostró que en proyectos pequeños el flujo Simple **iguala mucho a los tres agentes**, reduciendo
+las diferencias a matices de velocidad, cobertura de tests y manejo de errores.

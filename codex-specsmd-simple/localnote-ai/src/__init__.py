@@ -1,0 +1,1 @@
+"""LocalNote AI source package."""

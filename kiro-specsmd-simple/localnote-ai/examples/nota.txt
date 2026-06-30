@@ -1,0 +1,15 @@
+Reunión del lunes 15 de enero:
+
+- Hablar con diseño sobre el nuevo landing page
+- Revisar presupuesto Q1 con finanzas
+- El cliente de México pidió cambios en el contrato, hay que responderle antes del viernes
+- Pendiente: migrar base de datos a nuevo servidor (Juan lo está viendo)
+- María necesita acceso al repositorio de documentación
+- Idea: automatizar el reporte semanal de ventas con un script de Python
+- No olvidar: renovar licencia de Figma antes del 31
+- Posible reunión con proveedor nuevo de hosting el miércoles
+
+Notas sueltas:
+* El equipo está sobrecargado esta semana
+* Priorizar lo del cliente de México
+* Ver si el hosting actual aguanta el tráfico de febrero

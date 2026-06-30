@@ -1,0 +1,8 @@
+Reunion del equipo:
+
+- Revisar el borrador del README.
+- Probar la aplicacion con un texto largo.
+- Confirmar que Ollama este instalado localmente.
+- Preparar una respuesta profesional para el cliente sobre el retraso.
+
+Idea suelta: seria bueno ordenar estas notas y decidir que hacer primero.
