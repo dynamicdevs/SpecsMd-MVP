@@ -3,7 +3,7 @@
 ## De qué trata este experimento
 
 Este repositorio compara cómo **3 IDEs agénticos** (Claude Code, Codex, Kiro) ejecutan la metodología
-**specsmd**, en **tres experimentos** (con un cuarto en curso):
+**specsmd**, en **cuatro experimentos**:
 
 - **🧪 Experimento V1 — AI-DLC**: la misma app (un **CLI de compra de boletos de cine**) construida 3
   veces con el flujo **AI-DLC** (Init → Inception → Construction → Operations, con checkpoints humanos).
@@ -11,10 +11,12 @@ Este repositorio compara cómo **3 IDEs agénticos** (Claude Code, Codex, Kiro) 
   veces con el flujo **FIRE** (Intent → Work Item → Run, alta autonomía).
 - **📝 Experimento V3 — Simple**: una app **CLI de IA local** (**LocalNote AI**, Python + Ollama)
   construida 3 veces con el flujo **Simple** (Requisitos → Diseño → Tareas → Implementación).
-- **🧠 Experimento V4 — Ideation** *(en curso)*: cuarta ronda que se probará estos días, centrada en
-  la fase de **Ideation** de la metodología. Ver "Próximos pasos".
+- **🧠 Experimento V4 — Ideation**: una app **CLI de IA local** (**IdeaForge Local**, Python +
+  Ollama) construida 3 veces con el flujo **Ideation** (Brainstorm → Opportunities → Selected Idea →
+  Requirements → Design → Tasks → Implementación). Cierra el ciclo con la fase **previa** a especificar.
 
-El resto de este documento detalla primero el **V1**; el **V2** y el **V3** están al final.
+El resto de este documento detalla primero el **V1**; el **V2**, **V3** y **V4**, junto con las
+**conclusiones finales**, están al final.
 
 ### Experimento V1 — los 3 entornos
 
@@ -202,6 +204,10 @@ cd kiro-specsmd && npm install && npm run build && npm run billboard
 ├── codex-specsmd-simple/      # V3 · Simple · LocalNote AI · Codex
 ├── kiro-specsmd-simple/       # V3 · Simple · LocalNote AI · Kiro
 │
+├── claude-specsmd-ideation/   # V4 · Ideation · IdeaForge Local · Claude Code
+├── codex-specsmd-ideation/    # V4 · Ideation · IdeaForge Local · Codex
+├── kiro-specsmd-ideation/     # V4 · Ideation · IdeaForge Local · Kiro
+│
 └── README.md                  # Este archivo
 ```
 
@@ -371,6 +377,130 @@ amplificó las diferencias de costo.
 
 ---
 
+## 🧠 Experimento V4 — SpecsMD **Ideation** (app *IdeaForge Local*)
+
+> Cuarta y última vuelta del experimento, centrada en la fase de **Ideation** de SpecsMD: el paso
+> **previo** a especificar. En lugar de partir de un alcance ya dado, cada agente recorre primero un
+> flujo de ideación documentado (**Brainstorm → Opportunities → Selected Idea → Requirements →
+> Design → Tasks**) y **solo después** implementa. El objetivo: evaluar no la construcción guiada,
+> sino la **generación temprana de ideas y alcance** antes de bajar a código.
+
+### El caso de uso (V4)
+
+Una app **CLI en Python** llamada **IdeaForge Local**: recibe una idea desordenada y, con **IA 100%
+local** vía [Ollama](https://ollama.com) (modelo por defecto `minimax-m3:cloud`, configurable por
+`.env`), la convierte en una propuesta clara. Cuatro modos: `ideate` (idea cruda → propuesta
+estructurada), `compare` (varias ideas → recomendación), `mvp` (idea grande → MVP mínimo) y `brief`
+(idea → brief técnico). Restricciones intencionales: sin APIs externas, sin cloud, sin base de
+datos, sin frameworks web — solo `ollama`, `python-dotenv` y `pytest`. Lo distintivo del V4 es que
+**antes del código** cada agente produjo los 6 documentos de ideación en `specs/ideaforge-local/`.
+
+| Carpeta | Agente | IDE / Entorno |
+|---------|--------|---------------|
+| `claude-specsmd-ideation/` | Claude Code | Terminal CLI |
+| `codex-specsmd-ideation/` | Codex (OpenAI) | Visual Studio Code |
+| `kiro-specsmd-ideation/` | Kiro (Amazon) | Kiro IDE |
+
+> Los tres recorrieron primero el flujo de Ideation (los 6 docs `00_brainstorm` → `05_tasks`) y
+> luego implementaron la misma app. La estructura de código quedó prácticamente idéntica
+> (`app.py` + `src/{config,ai_client,prompts,file_loader,output_writer}.py` + `tests/`), así que
+> las diferencias están en **cómo organizaron la carpeta**, la **cobertura de tests** y el nivel de
+> detalle de los documentos de ideación.
+
+### Resumen ejecutivo (V4)
+
+| Aspecto | Claude Code | Codex | Kiro |
+|---------|-------------|-------|------|
+| **Resultado** | ✅ Funcional | ✅ Funcional | ✅ Funcional |
+| **Stack** | Python 3 + Ollama | Python 3 + Ollama | Python 3 + Ollama |
+| **Tests (pasan)** | 21 ✅ | 15 ✅ | 21 ✅ |
+| **Test del CLI (`app.py`)** | No (módulos puros) | **Sí (`test_app.py`)** | No (módulos puros) |
+| **Docs Ideation** | 6 (`00`→`05`) | 6 (`00`→`05`) | 6 (`00`→`05`) |
+| **Layout del proyecto** | Anidado en `ideaforge-local/` | **Plano en la raíz** de la carpeta | Anidado en `ideaforge-local/` |
+| **Sesiones** | 1 (con vueltas para ubicar carpeta) | 1 (directo) | 1 (de un tirón) |
+| **Estilo de ejecución** | Documenta a fondo, itera el layout | Rápido y pragmático | Todo de una vez, ordenado |
+
+### 👀 Comparativa desde la perspectiva del experimentador
+
+**1. Claude Code — Ideación a fondo, con alguna vuelta de layout**
+> Claude **ejecutó directo todo el flujo de Ideation** y luego implementó, con la mayor cobertura de
+> tests (21) y documentos de ideación detallados. Como en el V3, se dio **alguna vuelta para ubicar
+> la carpeta** (creó el proyecto y luego lo acomodó en el lugar pedido). Probó la app end-to-end
+> contra Ollama real.
+
+**2. Codex — Directo, pragmático y el único que testeó el CLI**
+> Codex fue **rápido y al grano**: dejó el proyecto **plano en la raíz** de su carpeta (sin anidar) y
+> fue el **único que escribió un test del CLI** (`test_app.py`), aunque con menos tests en total (15).
+> Sin vueltas, una sola sesión.
+
+**3. Kiro — Todo de una vez y ordenado**
+> Kiro **ejecutó todo de corrido** sin pausas ni reubicaciones, con la misma cobertura que Claude
+> (21 tests) y la misma estructura anidada. El más fluido de los tres en esta ronda.
+
+### Lectura del experimento V4
+
+| Eje | Quién destacó | Comentario |
+|-----|---------------|------------|
+| **Ejecución directa** | 🟢 Los tres | Nadie se trabó: del brainstorm al código sin bloqueos |
+| **Cobertura de tests** | 🟢 Claude / Kiro | 21 tests cada uno vs. 15 de Codex |
+| **Test de extremo a extremo del CLI** | 🟢 Codex | El único con `test_app.py` |
+| **Ejecución sin fricción** | 🟢 Kiro | De un tirón, sin reubicar carpetas |
+| **Profundidad de ideación** | 🟢 Claude | Documentos `00`→`05` más detallados |
+
+**Conclusión V4**: cuando el trabajo arranca en **Ideation** (pensar antes de codear), los tres
+agentes **ejecutaron el flujo completo de corrido y sin complicaciones**, y **ninguno consumió más
+de una sesión**. Al igual que en el V3, una metodología ligera y bien acotada **iguala mucho el
+terreno**: los tres convergen a la misma arquitectura y a un resultado funcional. Las diferencias
+quedan en matices — Claude documenta y testea más (a cambio de alguna vuelta de layout), Kiro
+ejecuta sin fricción, y Codex es el más pragmático y el único que probó el CLI de punta a punta.
+
+---
+
+## 🏁 Conclusiones finales del experimento (V1 → V4)
+
+Tras cuatro rondas y cuatro flujos (**AI-DLC, FIRE, Simple, Ideation**) con tres agentes:
+
+1. **Todos ejecutaron estas metodologías directo y sin problemas.** En las cuatro rondas, los tres
+   agentes (Claude, Codex, Kiro) llegaron a un resultado **funcional, compilando y con tests en
+   verde**, sin bloqueos ni fallos irrecuperables. La metodología SpecsMD se adapta a los tres
+   entornos.
+
+2. **Nadie consumió más de una sesión** en las rondas de proyecto acotado (V3 Simple y V4 Ideation):
+   los tres agentes resolvieron el alcance completo dentro de **una única sesión**. El costo solo se
+   disparó en el extremo opuesto — V2 (FIRE) con apego literal y granular (Codex, +2,5 sesiones).
+
+3. **A menor ceremonia y menor tamaño, menor distancia entre agentes.** FIRE (V2) amplificó las
+   diferencias de costo; Simple (V3) e Ideation (V4) las redujeron a matices de cobertura de tests y
+   organización. La elección de flujo importa tanto como la del agente.
+
+### ¿Cuál fue la mejor metodología?
+
+**Ideation (V4) y Simple (V3) fueron las más eficientes y predecibles**, y de las dos, **Ideation se
+lleva el primer lugar**: añade el paso de *pensar antes de construir* (brainstorm → oportunidades →
+idea elegida → requisitos → diseño → tareas) **sin costar más** —los tres agentes la ejecutaron de
+corrido en una sola sesión— y produce un proyecto mejor fundamentado, con su alcance justificado por
+escrito antes de la primera línea de código. Para proyectos pequeños y acotados es el mejor
+equilibrio entre rigor y costo. **AI-DLC (V1)** sigue siendo la opción para proyectos grandes que
+exigen checkpoints humanos por fase, y **FIRE (V2)** premia la autonomía pero penaliza el apego
+literal.
+
+### ¿Con qué modelo lo ocuparía?
+
+Para **construir** (las cuatro metodologías, agentes que escriben y razonan sobre el código):
+**Claude Code con un modelo Claude Opus** (la familia 4.x) — fue el más consistente en cobertura de
+tests, separación de responsabilidades y profundidad de documentación a lo largo de las cuatro
+rondas, sin disparar el costo en los proyectos acotados.
+
+Para la **IA local dentro de las apps** (V3 y V4, donde la app usa Ollama): **`minimax-m3:cloud`**
+vía Ollama, tal como quedó por defecto en las tres implementaciones — local, sin APIs externas,
+configurable por `.env` y suficiente para las tareas de ideación, resumen y generación de los CLIs.
+
+> **En una frase:** *Ideation + Claude Code (Opus) para guiar la construcción, y `minimax-m3:cloud`
+> vía Ollama para la IA local de la app.* Es la combinación que dio el mejor resultado al menor costo
+> en proyectos pequeños y bien acotados.
+
+---
+
 ## Construido por
 
 **Mauricio De Juan** — mdejuan@dynamicdevs.io
@@ -379,24 +509,17 @@ Experimento diseñado para validar la metodología **SpecsMD AI-DLC** como frame
 
 ---
 
-## Próximos pasos
+## Flujos cubiertos
 
-El **V1** usó el flujo **AI-DLC** (el más completo de SpecsMD, con checkpoints humanos en cada fase)
-sobre un CLI de cine. El **V2** (apartado 🔥) probó **FIRE** sobre una app fullstack ambiciosa
-(*Fricción Cero*). El **V3** (apartado 📝) probó el flujo **Simple** sobre un CLI de IA local
-(*LocalNote AI*). Con eso, los tres flujos principales de SpecsMD quedan cubiertos:
+Los **cuatro flujos** de SpecsMD quedan cubiertos por las cuatro rondas del experimento:
 
-- ~~**Simple** — Solo generación de spec por fases (Requisitos → Diseño → Tareas) + implementación.~~ ✅ Cubierto en el **Experimento V3**.
-- ~~**Fire** — Ejecución rápida con 0-2 checkpoints.~~ ✅ Cubierto en el **Experimento V2**.
-- ~~**AI-DLC** — Flujo completo con checkpoints humanos por fase.~~ ✅ Cubierto en el **Experimento V1**.
+- ~~**AI-DLC** — Flujo completo con checkpoints humanos por fase.~~ ✅ Cubierto en el **Experimento V1** (CLI de cine).
+- ~~**Fire** — Ejecución rápida con 0-2 checkpoints.~~ ✅ Cubierto en el **Experimento V2** (*Fricción Cero*).
+- ~~**Simple** — Solo generación de spec por fases (Requisitos → Diseño → Tareas) + implementación.~~ ✅ Cubierto en el **Experimento V3** (*LocalNote AI*).
+- ~~**Ideation** — Pensar antes de construir (Brainstorm → Opportunities → Selected Idea → Requirements → Design → Tasks).~~ ✅ Cubierto en el **Experimento V4** (*IdeaForge Local*).
 
-### 🧠 Cuarta ronda — Experimento V4 (Ideation) · *en curso*
-
-Como **cuarta ronda** quedará agregado un **cuarto proyecto** centrado en la fase de **Ideation** de
-la metodología, que **se probará durante estos días**. Cerrará el ciclo evaluando no solo la
-construcción guiada, sino la **generación temprana de ideas y alcance** antes de especificar.
-
-Con V1 (AI-DLC), V2 (FIRE) y V3 (Simple) ya se puede contrastar **ceremonia alta vs. autonomía alta
-vs. mínima**: el V2 mostró que en FIRE el apego literal y granular (Codex) se vuelve más costoso; el
-V3 mostró que en proyectos pequeños el flujo Simple **iguala mucho a los tres agentes**, reduciendo
-las diferencias a matices de velocidad, cobertura de tests y manejo de errores.
+Con las cuatro rondas se puede contrastar **ceremonia alta vs. autonomía alta vs. mínima vs.
+ideación temprana**: el V2 mostró que en FIRE el apego literal y granular (Codex) se vuelve más
+costoso; el V3 y el V4 mostraron que en proyectos pequeños los flujos Simple e Ideation **igualan
+mucho a los tres agentes**, reduciendo las diferencias a matices de cobertura de tests y
+organización. Ver las **🏁 Conclusiones finales** más arriba.

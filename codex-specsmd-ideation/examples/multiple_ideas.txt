@@ -1,0 +1,5 @@
+Idea A: Una app local de consola que toma ideas desordenadas y las transforma en propuestas claras usando Ollama.
+
+Idea B: Un sistema para guardar automaticamente todas las ideas en una base de datos y crear reportes historicos.
+
+Idea C: Un generador de briefs tecnicos desde archivos de texto locales, sin usar servicios externos.

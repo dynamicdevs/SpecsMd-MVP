@@ -1,0 +1,9 @@
+Idea A: Una app de consola que ordena ideas desordenadas usando IA local, sin nube.
+
+Idea B: Un gestor de tareas con recordatorios por voz que funcione sin internet.
+
+Idea C: Una herramienta que toma notas de reuniones y genera un resumen con los
+acuerdos y las próximas acciones, todo en local.
+
+No sé cuál de las tres perseguir primero. Quiero algo simple, local y que sirva
+para practicar metodología de ideación con IA.

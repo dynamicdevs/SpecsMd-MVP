@@ -1,0 +1,1 @@
+Quiero crear una app local para ordenar mis ideas de proyectos con IA. A veces tengo muchas ideas mezcladas y no se cual vale la pena construir primero. Me gustaria pegar una idea desordenada y recibir algo mas claro, con problema, usuario, funcionalidades y MVP.
